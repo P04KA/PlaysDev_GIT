@@ -1,0 +1,5 @@
+Subject: Проверка отправки почты
+From: merklondon90@gmail.com
+To: imp04ka@yandex.ru
+
+Это тестовое письмо.
