@@ -55,7 +55,6 @@ VOLUME ["/etc/letsencrypt", "/certbot/www"]
 RUN chmod +x /entrypoint-letsencrypt-cert.sh \
             /entrypoint-yandex-cert.sh
 
-
 ENTRYPOINT ["/bin/sh", "-c", "if [ \"$CERT_TYPE\" = 'yandex' ]; then exec /entrypoint-yandex-cert.sh; else exec /entrypoint-letsencrypt-cert.sh; fi"]
 RUN apk add --no-cache su-exec
 #CMD ["sh", "-c", "exec su-exec www:www nginx -g 'daemon off;'"]
