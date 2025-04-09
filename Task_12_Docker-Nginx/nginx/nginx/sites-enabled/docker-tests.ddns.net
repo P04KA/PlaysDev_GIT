@@ -2,8 +2,8 @@ upstream apache_backend {
     server apache:80;
 }
 upstream redblue {
-    server 158.160.4.160:8081;  # Красный сервер
-    server 158.160.4.160:8082;  # Синий сервер
+    server 158.160.4.160:8081;
+    server 158.160.4.160:8082;
 }
 
 server {
