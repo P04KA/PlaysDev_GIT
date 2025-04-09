@@ -11,7 +11,6 @@ server {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
-
     listen 80;
     server_name docker-tests.ddns.net;
 
@@ -22,8 +21,6 @@ server {
     if ($scheme = 'http') {
         return 301 https://$host$request_uri;
     }
-
-
 }
 server {
 
