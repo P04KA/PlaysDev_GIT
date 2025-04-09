@@ -53,10 +53,6 @@ server {
         proxy_pass http://apache_backend/info.php;
     }
 
-    ###
-    # Other
-    ###
-
     location /secondpage {
         root /sites/starter;
         try_files $uri /secondpage.html;
