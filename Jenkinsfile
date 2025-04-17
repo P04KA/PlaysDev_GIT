@@ -24,12 +24,11 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                
                     sh """
                         echo ${OAUTH_TOKEN} | docker login --username oauth --password-stdin cr.yandex
                         docker push ${DOCKER_IMAGE}
                     """
-                   
+
                     sh """
                         docker tag ${DOCKER_IMAGE} ${REGISTRY}:latest
                         docker push ${REGISTRY}:latest
@@ -54,7 +53,6 @@ pipeline {
                                     sudo apt-get install -y docker-ce
                                 fi
 
-                             
                                 if ! command -v yc &>/dev/null; then
                                     curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
                                     exec -l $SHELL
