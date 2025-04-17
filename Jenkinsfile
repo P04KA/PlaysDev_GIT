@@ -20,8 +20,8 @@ pipeline {
   --username oauth \
   --password-stdin \
  cr.yandex'
-                    sh 'docker tag myapp cr.yandex/crp1hc0sfitdo1m1vnt4:latest'
-                    sh 'docker push cr.yandex/crp1hc0sfitdo1m1vnt4:latest'
+                    sh 'docker tag myapp cr.yandex/crp0oph9869e43c5738o'
+                    sh 'docker push cr.yandex/crp0oph9869e43c5738o'
                 }
             }
         }
