@@ -27,8 +27,29 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ssh ubuntu2@158.160.25.228 'docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest && docker run -d cr.yandex/crp1hc0sfitdo1m1vnt4:latest'"
+		sshagent(['prod-server-key']) {
+                    sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu2@158.160.25.228 "
+			sudo apt-get update
+			sudo apt-get install ca-certificates curl
+			sudo install -m 0755 -d /etc/apt/keyrings
+			sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+			sudo chmod a+r /etc/apt/keyrings/docker.asc
+			echo \
+  			"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  			$(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  			sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+			sudo apt-get update
+			sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+                        docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest
+                        docker stop myapp || true
+                        docker rm myapp || true
+                        docker run -d --name myapp cr.yandex/crp1hc0sfitdo1m1vnt4:latest
+                    "
+                    '''
             }
+	  }
         }
     }
 
