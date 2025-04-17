@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh "ssh ubuntu@51.250.106.240 'docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest && docker run -d cr.yandex/crp1hc0sfitdo1m1vnt4:latest'"
+                sh "ssh ubuntu2@158.160.25.228 'docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest && docker run -d cr.yandex/crp1hc0sfitdo1m1vnt4:latest'"
             }
         }
     }
