@@ -1,64 +1,41 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_REGISTRY = "cr.yandex/crp1hc0sfitdo1m1vnt4"  // Yandex Container Registry
-        DOCKER_IMAGE = "my-app"
-        DOCKER_TAG = "${env.BUILD_NUMBER}-${env.GIT_COMMIT.substring(0, 7)}"  // Например: 42-abc1234
-    }
-
     stages {
-        // Stage 1: Получение кода из Git
-        stage('Checkout Git') {
+        stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/P04KA/PlaysDev_GIT.git'
             }
         }
-
-        // Stage 2: Сборка Docker-образа
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                script {
-                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}")
-                }
+                sh 'docker build -t myapp .'
             }
         }
-
-        // Stage 3: Загрузка образа в Registry
-        stage('Push to Registry') {
+        stage('Push') {
             steps {
                 script {
-                    docker.withRegistry("https://${DOCKER_REGISTRY}", "docker-registry-creds") {
-                        docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+                    withCredentials([usernamePassword(credentialsId: '123', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh "echo y0__xCI3oilqveAAhjB3RMgm4m-0BI1sitH7TbrAx-Ao3vIODQwXTu0Uw|docker login \
+  --username oauth \
+  --password-stdin \
+ cr.yandex"
+                        sh "docker tag myapp cr.yandex/b1g29785h55ampa74ipj:latest"
+                        sh "docker push cr.yandex/b1g29785h55ampa74ipj:latest"
                     }
                 }
             }
         }
-
-        // Stage 4: Деплой на продакшен-серверы
-        stage('Deploy to Production') {
+        stage('Deploy') {
             steps {
-                sshagent(['prod-server-ssh-key']) {
-                    sh """
-                        ssh -o StrictHostKeyChecking=no user@prod-server-1 "
-                            docker pull ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
-                            docker stop my-app || true
-                            docker rm my-app || true
-                            docker run -d --name my-app -p 80:80 ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
-                        "
-                    """
-                }
+                sh "ssh ubuntu@51.250.106.240 'docker pull cr.yandex/b1g29785h55ampa74ipj:latest && docker run -d cr.yandex/b1g29785h55ampa74ipj:latest'"
             }
         }
+    }
 
-        // Stage 5: Очистка старых образов (чтобы не забивать диск)
-        stage('Cleanup Old Images') {
-            steps {
-                sh """
-                    docker image prune -a -f --filter 'until=24h'
-                    docker system df
-                """
-            }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
