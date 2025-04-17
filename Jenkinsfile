@@ -48,8 +48,6 @@ pipeline {
 		script {
                     sh '''
                         ssh ubuntu2@158.160.25.228 "
-			curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
-			echo 'source /home/ubuntu2/yandex-cloud/completion.zsh.inc' >>  ~/.zshrc'
 			yc config list
                         docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest
                         docker run -d --name myapp cr.yandex/crp1hc0sfitdo1m1vnt4:latest
