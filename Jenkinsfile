@@ -49,8 +49,6 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu2@158.160.25.228 "
                         docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest
-                        docker stop myapp || true
-                        docker rm myapp || true
                         docker run -d --name myapp cr.yandex/crp1hc0sfitdo1m1vnt4:latest
                     "
                     '''
