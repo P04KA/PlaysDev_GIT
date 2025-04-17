@@ -42,13 +42,12 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu3@158.160.78.213 "
-                            
+                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} "
                                 if ! command -v docker &>/dev/null; then
                                     sudo apt-get update -qq &&
                                     sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common &&
                                     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
-                                    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" &&
+                                    sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable' &&
                                     sudo apt-get update -qq &&
                                     sudo apt-get install -y docker-ce
                                 fi
@@ -69,7 +68,7 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ubuntu3@158.160.78.213 "
+                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} "
                                 # Настройка YC CLI
                                 yc config set token ${OAUTH_TOKEN}
                                 yc config set cloud-id b1g5b020anchqspg6qul
