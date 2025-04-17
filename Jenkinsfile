@@ -50,7 +50,7 @@ pipeline {
                         ssh ubuntu3@158.160.14.151 "
 			curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 			exec -l $SHELL
-			echo -e "1\ny0__xCI3oilqveAAhjB3RMgm4m-0BI1sitH7TbrAx-Ao3vIODQwXTu0Uw\n17\ny\n2" | yc init
+			echo -e "y0__xCI3oilqveAAhjB3RMgm4m-0BI1sitH7TbrAx-Ao3vIODQwXTu0Uw\n17\ny\n2" | yc init
 			yc config list
                         docker pull cr.yandex/crp1hc0sfitdo1m1vnt4:latest
                         docker run -d --name myapp cr.yandex/crp1hc0sfitdo1m1vnt4:latest
