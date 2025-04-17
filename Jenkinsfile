@@ -42,7 +42,7 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} "
+                            ssh ubuntu3@158.160.78.213 "
                                 if ! command -v docker &>/dev/null; then
                                     sudo apt-get update -qq &&
                                     sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common &&
@@ -68,7 +68,7 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} "
+                            ssh ubuntu3@158.160.78.213 "
                                 # Настройка YC CLI
                                 yc config set token ${OAUTH_TOKEN}
                                 yc config set cloud-id b1g5b020anchqspg6qul
