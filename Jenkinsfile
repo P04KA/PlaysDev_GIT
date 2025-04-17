@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        ssh ubuntu2@158.160.25.228 "
+                        ssh ubuntu3@89.169.170.251 "
                         if ! command -v docker &> /dev/null; then
                             sudo apt-get update &&
                             sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common &&
@@ -47,7 +47,7 @@ pipeline {
             steps {
 		script {
                     sh '''
-                        ssh ubuntu2@158.160.25.228 "
+                        ssh ubuntu3@89.169.170.251 "
 			curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
 			exec -l $SHELL
 			yc init --oauth-token y0__xCI3oilqveAAhjB3RMgm4m-0BI1sitH7TbrAx-Ao3vIODQwXTu0Uw
