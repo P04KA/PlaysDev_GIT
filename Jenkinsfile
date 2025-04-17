@@ -64,13 +64,6 @@ pipeline {
 	  }
         }
     }
-	stage('Cleanup') {
-            steps {
-                script {
-                    sh "docker system prune"
-                }
-            }
-        }
 
     post {
         always {
