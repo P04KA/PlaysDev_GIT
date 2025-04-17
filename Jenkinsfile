@@ -42,8 +42,8 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} '
-                                # Установка Docker если отсутствует
+                            ssh -o StrictHostKeyChecking=no ubuntu3@158.160.78.213 "
+                            
                                 if ! command -v docker &>/dev/null; then
                                     sudo apt-get update -qq &&
                                     sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common &&
@@ -57,7 +57,7 @@ pipeline {
                                     curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
                                     exec -l $SHELL
                                 fi
-                            '
+                            "
                         """
                     }
                 }
@@ -69,7 +69,7 @@ pipeline {
                 script {
                     sshagent(['jenkins-ssh-key']) {
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${DEPLOY_HOST} '
+                            ssh -o StrictHostKeyChecking=no ubuntu3@158.160.78.213 "
                                 # Настройка YC CLI
                                 yc config set token ${OAUTH_TOKEN}
                                 yc config set cloud-id b1g5b020anchqspg6qul
@@ -86,7 +86,7 @@ pipeline {
 
                                 # Запуск нового контейнера
                                 sudo docker run -d --name myapp ${DOCKER_IMAGE}
-                            '
+                            "
                         """
                     }
                 }
