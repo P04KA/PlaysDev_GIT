@@ -70,9 +70,4 @@ pipeline {
             cleanWs()
         }
     }
-}  
-
-
-
-
-
+} 

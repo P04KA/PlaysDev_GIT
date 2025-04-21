@@ -1,14 +1,12 @@
 server {
 
-    listen ${PORT};
-    server_name ${DOMAIN};
-
-    root /sites/starter;
-    index index.html;
+    listen 80;
+    server_name localhost;
 
     location / {
-        try_files $uri $uri/ =404;
-    }
+            root   html;
+            index  index.html index.htm;
+        }
 
     ###
     # Other
