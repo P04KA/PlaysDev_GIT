@@ -9,12 +9,12 @@ ARG PROJECT_DIR
 ARG CERTIFICATE_ID
 ARG IAM_TOKEN
 
-ENV EMAIL=$EMAIL
-ENV DOMAIN=$DOMAIN
-ENV PROJECT_DIR=$PROJECT_DIR
-ENV CERT_TYPE=$CERT_TYPE
-ENV CERTIFICATE_ID=$CERTIFICATE_ID
-ENV IAM_TOKEN=$IAM_TOKEN
+ENV EMAIL=merklondon90@mgmail.com
+ENV DOMAIN=docker-tests.ddns.net
+ENV PROJECT_DIR=/Users/p04ka/Desktop/nginx
+ENV CERT_TYPE=letsencrypt
+ENV CERTIFICATE_ID=fpqvjh6kg0hkm5gjovip
+ENV IAM_TOKEN=xxx
 
 RUN apk add --no-cache bash
 RUN addgroup -g 1000 -S www && \
@@ -54,7 +54,6 @@ VOLUME ["/etc/letsencrypt", "/certbot/www"]
 
 RUN chmod +x /entrypoint-letsencrypt-cert.sh \
             /entrypoint-yandex-cert.sh
-
 
 ENTRYPOINT ["/bin/sh", "-c", "if [ \"$CERT_TYPE\" = 'yandex' ]; then exec /entrypoint-yandex-cert.sh; else exec /entrypoint-letsencrypt-cert.sh; fi"]
 RUN apk add --no-cache su-exec
